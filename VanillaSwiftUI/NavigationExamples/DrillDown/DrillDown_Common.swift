@@ -37,4 +37,8 @@ extension DrillDown {
                 .navigationTitle("Example #3")
         }
     }
+    
+    static func example4() -> some View {
+        Example4.RootScene()
+    }
 }
