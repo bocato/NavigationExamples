@@ -10,14 +10,14 @@ extension DrillDown.Example5 {
         var buildScene2Model: () -> Scene2Model = Scene2Model.init
     }
     
-    enum Route: Hashable {
+    enum Path: Hashable {
         case scene1(Scene1Model)
         case scene2(Scene2Model)
     }
     
     final class RootModel: ObservableObject {
         var sceneModelBuilder = SceneModelBuilder()
-        @Published var path = NavigationPath()
+        @Published var path: [Path] = []
         
         func navigateToScene1() {
             let model = sceneModelBuilder.buildScene1Model()
@@ -29,7 +29,7 @@ extension DrillDown.Example5 {
             }
             
             path.append(
-                Route.scene1(model)
+                .scene1(model)
             )
         }
         
@@ -39,7 +39,7 @@ extension DrillDown.Example5 {
                 self?.popToRoot()
             }
             path.append(
-                Route.scene2(model)
+                .scene2(model)
             )
         }
         
@@ -49,7 +49,7 @@ extension DrillDown.Example5 {
         }
         
         func popToRoot() {
-            path = NavigationPath()
+            path = []
         }
     }
     
@@ -70,7 +70,7 @@ extension DrillDown.Example5 {
                     .padding()
                 }
                 .navigationTitle("Example #4")
-                .navigationDestination(for: Route.self) { route in
+                .navigationDestination(for: Path.self) { route in
                     switch route {
                     case let .scene1(model):
                         Scene1(model: model)
