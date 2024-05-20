@@ -41,4 +41,8 @@ extension DrillDown {
     static func example4() -> some View {
         Example4.RootScene()
     }
+    
+    static func example5() -> some View {
+        Example4.RootScene()
+    }
 }

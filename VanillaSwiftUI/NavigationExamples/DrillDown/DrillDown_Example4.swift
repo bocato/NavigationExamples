@@ -5,6 +5,10 @@ extension DrillDown {
 }
 
 extension DrillDown.Example4 {
+    typealias Model = DrillDown.Example4.NavigationModel
+}
+
+extension DrillDown.Example4 {
     enum Route: Hashable {
         case detail1
         case detail2
@@ -18,9 +22,8 @@ extension DrillDown.Example4 {
         }
         
         func pop() {
-            if !path.isEmpty {
-                path.removeLast()
-            }
+            guard !path.isEmpty else { return }
+            path.removeLast()
         }
         
         func popToRoot() {
@@ -34,12 +37,12 @@ extension DrillDown.Example4 {
         var body: some View {
             NavigationStack(path: $navigationModel.path) {
                 VStack {
-                    Button("Go to Detail View 1") {
+                    Button("Go to Scene 1") {
                         navigationModel.navigate(to: .detail1)
                     }
                     .padding()
                     
-                    Button("Go to Detail View 2") {
+                    Button("Go to Scene 2") {
                         navigationModel.navigate(to: .detail2)
                     }
                     .padding()
@@ -48,25 +51,25 @@ extension DrillDown.Example4 {
                 .navigationDestination(for: Route.self) { route in
                     switch route {
                     case .detail1:
-                        DetailView1(navigationModel: navigationModel)
+                        Scene1(navigationModel: navigationModel)
                     case .detail2:
-                        DetailView2(navigationModel: navigationModel)
+                        Scene2(navigationModel: navigationModel)
                     }
                 }
             }
         }
     }
     
-    struct DetailView1: View {
+    struct Scene1: View {
         @ObservedObject var navigationModel: NavigationModel
         
         var body: some View {
             VStack {
-                Text("Detail View 1")
+                Text("Scene 1")
                     .font(.largeTitle)
                     .padding()
                 Spacer()
-                Button("Go to Detail View 2") {
+                Button("Go to Scene 2") {
                     navigationModel.navigate(to: .detail2)
                 }
                 .padding()
@@ -79,12 +82,12 @@ extension DrillDown.Example4 {
         }
     }
     
-    struct DetailView2: View {
+    struct Scene2: View {
         @ObservedObject var navigationModel: NavigationModel
         
         var body: some View {
             VStack {
-                Text("Detail View 2")
+                Text("Scene 2")
                     .font(.largeTitle)
                     .padding()
                 Spacer()
